@@ -34,11 +34,21 @@ function App() {
     getCurrentLocation();
   }, []);
 
+  const getWeatherByCity = async (city) => {
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
+    let response = await fetch(url);
+    let data = await response.json();
+    setWeather(data);
+  };
+
   return (
     <div>
       <div className='container'>
         <WeatherBox weather={weather} />
-        <WeatherButton />
+        <WeatherButton
+          getWeatherByCity={getWeatherByCity}
+          getCurrentLocation={getCurrentLocation}
+        />
       </div>
     </div>
   );
