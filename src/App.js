@@ -15,7 +15,7 @@ const API_KEY = process.env.REACT_APP_WEATHER_KEY;
 // 6. 데이터를 들고오는 동안 로딩 스피너가 돈다
 function App() {
   const [weather, setWeather] = useState(null);
-  const [city, setCity] = useState('');
+  const [city, setCity] = useState(null);
   const [loading, setLoading] = useState(false);
   const cities = ['paris', 'london', 'taipei', 'seoul'];
   const getCurrentLocation = () => {
@@ -45,12 +45,20 @@ function App() {
   };
 
   useEffect(() => {
-    if (city === '') {
+    if (city === null) {
       getCurrentLocation();
     } else {
       getWeatherByCity();
     }
   }, [city]);
+
+  const handleCityChange = (city) => {
+    if (city === 'current') {
+      setCity(null);
+    } else {
+      setCity(city);
+    }
+  };
 
   return (
     <div>
@@ -67,7 +75,7 @@ function App() {
       ) : (
         <div className='container'>
           <WeatherBox weather={weather} />
-          <WeatherButton cities={cities} setCity={setCity} />
+          <WeatherButton cities={cities} handleCityChange={handleCityChange} />
         </div>
       )}
     </div>
