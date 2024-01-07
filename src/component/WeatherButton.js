@@ -1,30 +1,15 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 
-const WeatherButton = (props) => {
-  const getWeatherByCity = (city) => {
-    city === 'Current'
-      ? props.getCurrentLocation()
-      : props.getWeatherByCity(city);
-  };
-
+const WeatherButton = ({ cities, setCity }) => {
   return (
     <div>
-      <Button variant='success' onClick={() => getWeatherByCity('Current')}>
-        Current Location
-      </Button>
-      <Button variant='success' onClick={() => getWeatherByCity('Paris')}>
-        paris
-      </Button>
-      <Button variant='success' onClick={() => getWeatherByCity('London')}>
-        london
-      </Button>
-      <Button variant='success' onClick={() => getWeatherByCity('Taipei')}>
-        taipei
-      </Button>
-      <Button variant='success' onClick={() => getWeatherByCity('Seoul')}>
-        seoul
-      </Button>
+      <Button variant='success'>Current Location</Button>
+      {cities.map((item, index) => (
+        <Button variant='success' key={index} onClick={() => setCity(item)}>
+          {item}
+        </Button>
+      ))}
     </div>
   );
 };
